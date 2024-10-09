@@ -1,0 +1,20 @@
+{
+  "name": "flask-ecommerce-mini-project",
+  "version": "1.0.0",
+  "description": "flask mini project ecommerce",
+  "main": "eslint.config.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JSander72/Frontend_Week6_MiniProject_FLASK_eCommerce.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JSander72/Frontend_Week6_MiniProject_FLASK_eCommerce/issues"
+  },
+  "homepage": "https://github.com/JSander72/Frontend_Week6_MiniProject_FLASK_eCommerce#readme",
+  "keywords": []
+}
