@@ -30,7 +30,7 @@ def home():
 def add_product():
     connection = create_connection()
     if connection is None:
-        return jsonify({'error': 'Database connection failed'}), 500
+        return jsonify({'error': 'Database connection failed'}), 5000
 
     try:
         cursor = connection.cursor()
