@@ -90,7 +90,7 @@ const OrderDetails = () => {
         // Fetch orders from the database
         const fetchOrders = async () => {
             try {
-                const response = await fetch('/api/orders'); // Adjust the URL as needed
+                const response = await fetch('http://localhost:5000/api/orders'); // Adjust the URL as needed
                 const data = await response.json();
                 setOrders(data);
             } catch (error) {
@@ -104,7 +104,7 @@ const OrderDetails = () => {
     const handlePlaceOrder = async (order) => {
         const newOrder = { ...order, id: orders.length + 1, expectedDeliveryDate: '2023-12-31' };
         try {
-            const response = await fetch('/api/orders', {
+            const response = await fetch('http://localhost:5000/api/orders', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

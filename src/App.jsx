@@ -1,41 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import OrderDetails from './components/OrderDetails.jsx';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import ProductDetails from './components/products/ProductsDetails.jsx';
-import ProductList from './components/products/ProductList.jsx';
-// import FetchComponent from './assets/fetchComponent.jsx';
-import fetchProducts from './assets/fetchProducts.jsx'; 
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { Navbar, Nav, Container } from 'react-bootstrap';
+import CustomerPage from './components/customers/CustomerForm';
+import ProductPage from './components/products/ProductForm';
+import OrderPage from './components/OrderDetails';
+import './App.css';
 
-function App() {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const loadProducts = async () => {
-      try {
-        const data = await fetchProducts();
-        setProducts(data);
-        setLoading(false);
-      } catch (error) {
-        setError(error);
-        setLoading(false);
-      }
-    };
-
-    loadProducts();
-  }, []);
-
+const App = () => {
   return (
     <Router>
-      <div>
-        <Link to="/">Home</Link>
-        <Route path="/products" component={ProductList} />
-        <Route path="/product/:id" component={ProductDetails} />
-        <Route path="/order-details" component={OrderDetails} />
-      </div>
+      <Navbar bg="dark" variant="dark" expand="lg">
+        <Container>
+          <Navbar.Brand as={Link} to="/">E-Commerce App</Navbar.Brand>
+          <Nav className="mr-auto">
+            <Nav.Link as={Link} to="/customers">Customers</Nav.Link>
+            <Nav.Link as={Link} to="/products">Products</Nav.Link>
+            <Nav.Link as={Link} to="/orders">Orders</Nav.Link>
+          </Nav>
+        </Container>
+      </Navbar>
+
+      <Container className="mt-4">
+        <Routes>
+          <Route path="/customers" element={<CustomerPage />} />
+          <Route path="/products" element={<ProductPage />} />
+          <Route path="/orders" element={<OrderPage />} />
+          <Route path="/" element={<h1>Welcome to Next Level E-Commerce App!</h1>} />
+        </Routes>
+      </Container>
     </Router>
   );
-}
+};
 
 export default App;
