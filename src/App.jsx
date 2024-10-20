@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import OrderDetails from './components/OrderDetails';
+import FetchComponent from './assets/fetch.jsx';
+import OrderDetails from './assets/OrderDetails.jsx';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import ProductDetails from './assets/ProductDetails.jsx';
+import ProductList from './assets/ProductList.jsx';
+
+
 
 function App() {
   const [products, setProducts] = useState([]); // To store fetched products
@@ -9,7 +15,7 @@ function App() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await fetch('/api/products'); // Replace with your actual API endpoint
+        const response = await fetch('http://127.0.0.1:5000/api/products'); 
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -42,11 +48,11 @@ function App() {
             <h2>{product.name}</h2>
             <p>{product.description}</p>
             <p>Price: ${product.price}</p>
-            {/* Add more product details as needed */}
+            
           </li>
         ))}
       </ul>
-      <OrderDetails />
+      <FetchComponent />
     </div>
   );
 }

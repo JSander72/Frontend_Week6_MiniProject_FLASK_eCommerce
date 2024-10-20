@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-function App() {
+function FetchComponent() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -19,12 +19,14 @@ function App() {
 
   return (
     <div>
-      {/* Display the fetched data */}
-      {data.map((item) => (
-        <div key={item.id}>{/* ... display item details ... */}</div>
-      ))}
+      <h1>Fetched Data</h1>
+      <ul>
+        {data.map(item => (
+          <li key={item.id}>{item.name}</li>
+        ))}
+      </ul>
     </div>
   );
 }
 
-export default App;
+export default FetchComponent;
