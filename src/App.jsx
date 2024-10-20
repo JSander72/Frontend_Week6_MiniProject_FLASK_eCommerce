@@ -1,59 +1,40 @@
 import React, { useState, useEffect } from 'react';
-import FetchComponent from './assets/fetch.jsx';
-import OrderDetails from './assets/OrderDetails.jsx';
+import OrderDetails from './components/OrderDetails.jsx';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-import ProductDetails from './assets/ProductDetails.jsx';
-import ProductList from './assets/ProductList.jsx';
-
-
+import ProductDetails from './components/products/ProductsDetails.jsx';
+import ProductList from './components/products/ProductList.jsx';
+// import FetchComponent from './assets/fetchComponent.jsx';
+import fetchProducts from './assets/fetchProducts.jsx'; 
 
 function App() {
-  const [products, setProducts] = useState([]); // To store fetched products
-  const [loading, setLoading] = useState(true); // To handle loading state
-  const [error, setError] = useState(null); // To handle errors
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchProducts = async () => {
+    const loadProducts = async () => {
       try {
-        const response = await fetch('http://127.0.0.1:5000/api/products'); 
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        setProducts(data); 
+        const data = await fetchProducts();
+        setProducts(data);
+        setLoading(false);
       } catch (error) {
-        setError(error.message);
-      } finally {
+        setError(error);
         setLoading(false);
       }
     };
 
-    fetchProducts(); 
-  }, []); 
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+    loadProducts();
+  }, []);
 
   return (
-    <div>
-      <h1>Our Products</h1>
-      <ul>
-        {products.map((product) => (
-          <li key={product.id}> 
-            <h2>{product.name}</h2>
-            <p>{product.description}</p>
-            <p>Price: ${product.price}</p>
-            
-          </li>
-        ))}
-      </ul>
-      <FetchComponent />
-    </div>
+    <Router>
+      <div>
+        <Link to="/">Home</Link>
+        <Route path="/products" component={ProductList} />
+        <Route path="/product/:id" component={ProductDetails} />
+        <Route path="/order-details" component={OrderDetails} />
+      </div>
+    </Router>
   );
 }
 
