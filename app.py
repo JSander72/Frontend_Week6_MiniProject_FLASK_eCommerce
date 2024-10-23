@@ -6,6 +6,7 @@ import os
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://' + os.environ.get('DB_USER') + ':' + os.environ.get('DB_PASSWORD') + '@' + os.environ.get('DB_HOST') + '/' + os.environ.get('DB_NAME')
 db = SQLAlchemy(app)  # Initialize SQLAlchemy
+print(app.config['SQLALCHEMY_DATABASE_URI'])
 
 # Test connection to MySQL
 def test_connection():
