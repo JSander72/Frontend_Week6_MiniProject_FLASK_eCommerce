@@ -1,29 +1,26 @@
-from socket import create_connection
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
-import os
+from models import User, Product
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://' + os.environ.get('DB_USER') + ':' + os.environ.get('DB_PASSWORD') + '@' + os.environ.get('DB_HOST') + '/' + os.environ.get('DB_NAME')
-db = SQLAlchemy(app)  # Initialize SQLAlchemy
-print(app.config['SQLALCHEMY_DATABASE_URI'])
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///ecommerce.db' 
+db = SQLAlchemy(app)
 
-# Test connection to MySQL
-def test_connection():
-    try:
-        db_host = os.environ.get('DB_HOST', 'localhost')
-        db_port = int(os.environ.get('DB_PORT', 3306))
-        connection = create_connection((db_host, db_port))
-        print("Connection successful")
-        connection.close()
-    except Exception as e:
-        print(f"Connection failed: {e}")
+# issue with mysql using sqlite for now
+# moved models to models.py
+# able to launch http:127.0.0.1:5000 
+# but showing a 404 error "Not Found"
 
-# Example model
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True, nullable=False)
-    # ... other columns
+
+@app.route('/users')
+def get_users():
+    users = User.query.all()
+    return {'users': [user.username for user in users]}
+
+@app.route('/products')
+def get_products():
+    products = Product.query.all()
+    return {'products': [product.name for product in products]}
 
 with app.app_context():
     db.create_all()
